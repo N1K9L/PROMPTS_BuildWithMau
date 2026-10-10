@@ -1,622 +1,319 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Build with Mau — Vault de Prompts Replit 3D Scroll-Driven</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        replit: {
-                            bg: '#0D0F12',
-                            dark: '#0D1117',
-                            card: '#121824',
-                            border: '#30363d',
-                            accent: '#F26207',
-                            orange: '#FF5000',
-                            glow: 'rgba(242, 98, 7, 0.3)',
-                            cyan: '#00F0FF'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts Inter & JetBrains Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0D0F12;
-            color: #e6edf3;
-        }
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0D0F12;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #21262d;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #F26207;
-        }
-        /* Technical Grid Pattern */
-        .tech-grid {
-            background-image: linear-gradient(to right, rgba(48, 54, 61, 0.2) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(48, 54, 61, 0.2) 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
-        .glass-panel {
-            background: rgba(18, 24, 36, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(48, 54, 61, 0.8);
-        }
-        .glow-accent {
-            box-shadow: 0 0 25px rgba(242, 98, 7, 0.25);
-        }
-        .glow-cyan {
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.8; }
-        }
-        .animate-pulse-glow {
-            animation: pulseGlow 3s infinite ease-in-out;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build with Mau — 3D Scroll-Driven Web Prompts</title>
+  <style>
+    :root {
+      --bg-main: #0e1117;
+      --bg-card: #151922;
+      --bg-input: #1c2333;
+      --border: #2b3245;
+      --accent-red: #ff4500;
+      --accent-orange: #f56565;
+      --text-primary: #f0f4f8;
+      --text-secondary: #94a3b8;
+      --code-bg: #0b0d13;
+      --green-neon: #00ff66;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header Profile Section */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-red);
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ff4500, #ff8c00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-text p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    /* Global Info Banner */
+    .info-banner {
+      background: rgba(255, 69, 0, 0.1);
+      border: 1px solid var(--accent-red);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2.5rem;
+    }
+
+    .info-banner h2 {
+      font-size: 1.25rem;
+      color: var(--accent-orange);
+      margin-bottom: 0.5rem;
+    }
+
+    .password-badge {
+      display: inline-block;
+      background: var(--accent-red);
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-weight: bold;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Prompt Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-red);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .card-link {
+      font-size: 0.85rem;
+      color: var(--accent-orange);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    .prompt-box {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 6px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+      color: #a6accd;
+      height: 180px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      white-space: pre-wrap;
+    }
+
+    .btn-copy {
+      background: var(--accent-red);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    .btn-copy:hover {
+      background: #e03d00;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
-<body class="min-h-screen bg-[#0D0F12] text-[#e6edf3] antialiased selection:bg-[#F26207] selection:text-white tech-grid relative">
+<body>
 
-    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
-
-    <header class="sticky top-0 z-40 glass-panel border-b border-[#30363d] px-4 sm:px-8 py-3.5">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="relative">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F26207] to-[#FF5000] flex items-center justify-center font-bold text-white shadow-lg glow-accent">
-                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
-                    </div>
-                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#0D0F12] rounded-full"></span>
-                </div>
-                <div>
-                    <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-white flex items-center gap-2">
-                        Build with Mau <span class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-[#F26207]/20 text-[#F26207] border border-[#F26207]/30 font-mono uppercase font-bold">Replit 3D Vault</span>
-                    </h1>
-                    <p class="text-xs text-slate-400 font-mono">YouTube Creator Hub & Prompt Engineering</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                <div class="relative w-full sm:w-72">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                        <i class="fa-solid fa-search text-xs"></i>
-                    </span>
-                    <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Buscar prompt, frames, marca..." 
-                           class="w-full bg-[#0D1117] border border-[#30363d] rounded-lg pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#F26207] focus:ring-1 focus:ring-[#F26207] transition-all">
-                </div>
-                <button onclick="scrollToCatalog()"
-                        class="bg-[#F26207] hover:bg-[#FF5000] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all shadow-md flex items-center gap-2 shrink-0">
-                    <i class="fa-solid fa-bolt"></i> Ver Prompts
-                </button>
-            </div>
-        </div>
+  <div class="container">
+    <!-- Profile Header -->
+    <header>
+      <img src="WhatsApp Image 2026-09-21 at 1.36.02 PM.jpeg" alt="Build with Mau" class="profile-img">
+      <div class="header-text">
+        <h1>BUILD WITH MAU</h1>
+        <p>3D Scroll-Driven Interactive Website Prompt Vault for Replit Design</p>
+      </div>
     </header>
 
-    <section class="relative overflow-hidden pt-12 pb-10 px-4 sm:px-8 border-b border-[#30363d] bg-gradient-to-b from-[#121824]/80 via-[#0D1117]/90 to-[#0D0F12]">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_center,rgba(242,98,7,0.12),transparent_65%)] pointer-events-none"></div>
-        <div class="max-w-5xl mx-auto text-center relative z-10">
-            
-            <!-- Creator Avatar -->
-            <div class="inline-block relative mb-5 group">
-                <div class="absolute -inset-1.5 bg-gradient-to-r from-[#F26207] via-amber-500 to-[#00F0FF] rounded-full blur opacity-75 group-hover:opacity-100 transition duration-500 animate-pulse-glow"></div>
-                <div class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full border-2 border-[#F26207] overflow-hidden bg-[#121824] shadow-2xl mx-auto">
-                    <img src="WhatsApp Image 2026-09-21 at 1.36.02 PM.jpeg" alt="Mau - Build with Mau" 
-                         onerror="this.src='https://placehold.co/400x400/121824/F26207?text=MAU'" 
-                         class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
-                </div>
-                <div class="absolute bottom-1 right-1 bg-[#F26207] text-white p-1.5 rounded-full border-2 border-[#0D0F12] shadow-md" title="Canal Oficial Verificado">
-                    <i class="fa-solid fa-check text-xs"></i>
-                </div>
-            </div>
-
-            <!-- Title & Channel Subtitle -->
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F26207]/15 border border-[#F26207]/30 text-[#F26207] text-xs font-mono font-semibold mb-3">
-                <i class="fa-brands fa-youtube text-red-500"></i> BUILD WITH MAU — REPLIT SPECIAL
-            </div>
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
-                Vault de Prompts <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#F26207] via-orange-400 to-[#00F0FF]">Replit 3D Scroll-Driven</span>
-            </h2>
-            <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed mb-8">
-                Aprende a construir experiencias web 3D interactivas y cine-scroll driven en Replit Agent / Replit Design. Copia los prompts maestros, adáptalos en vivo y accede a las demos de prueba.
-            </p>
-
-            <!-- PROMINENT UNIVERSAL PASSWORD ACCESS CARD -->
-            <div class="max-w-2xl mx-auto glass-panel p-5 sm:p-6 rounded-2xl border-2 border-[#F26207]/80 bg-gradient-to-r from-[#121824] via-[#0D1117] to-[#121824] shadow-xl relative overflow-hidden group">
-                <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-[#F26207]/10 rounded-full blur-2xl pointer-events-none"></div>
-                
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="text-center sm:text-left">
-                        <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">ACCESO UNIVERSAL / PASSCODE</span>
-                        </div>
-                        <h3 class="text-sm font-semibold text-slate-300">Contraseña de los Sitios Demo:</h3>
-                    </div>
-
-                    <div class="flex items-center gap-2 bg-[#0D0F12] px-4 py-2.5 rounded-xl border border-[#F26207]/50 shadow-inner w-full sm:w-auto justify-between sm:justify-start">
-                        <i class="fa-solid fa-lock text-[#F26207] text-sm"></i>
-                        <code id="universalPassword" class="font-mono text-base font-bold text-[#00F0FF] tracking-wider px-2">scrollingwebsites</code>
-                        <button onclick="copyText('scrollingwebsites', 'Contraseña copiada')" 
-                                class="bg-[#F26207] hover:bg-[#FF5000] text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shrink-0 shadow">
-                            <i class="fa-solid fa-key"></i> Copiar
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="py-10 px-4 sm:px-8 max-w-7xl mx-auto">
-        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-[#30363d] relative overflow-hidden">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-6 border-b border-[#30363d]">
-                <div>
-                    <span class="text-xs font-mono text-[#00F0FF] uppercase tracking-wider font-bold">GUÍA DE INGENIERÍA DE PROMPTS</span>
-                    <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">¿Cómo crear tu experiencia 3D en Replit?</h3>
-                </div>
-                <div class="inline-flex items-center gap-2 text-xs font-mono bg-[#0D0F12] px-3.5 py-2 rounded-xl border border-[#30363d] text-slate-300">
-                    <i class="fa-solid fa-code-branch text-[#F26207]"></i> Replit Single-File HTML Canvas
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-[#0D0F12]/80 p-5 rounded-xl border border-[#30363d] hover:border-[#F26207]/50 transition-all">
-                    <div class="w-8 h-8 rounded-lg bg-[#F26207]/20 flex items-center justify-center text-[#F26207] font-bold text-xs mb-3 font-mono">01</div>
-                    <h4 class="text-white font-semibold text-sm mb-2">Paso 1: Copia y Personaliza</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Selecciona uno de los 8 prompts. Usa el botón <strong class="text-slate-200">"Personalizar"</strong> para cambiar el nombre de tu marca, colores o la cantidad de fotogramas (120, 240 o 480).
-                    </p>
-                </div>
-                <div class="bg-[#0D0F12]/80 p-5 rounded-xl border border-[#30363d] hover:border-[#F26207]/50 transition-all">
-                    <div class="w-8 h-8 rounded-lg bg-[#00F0FF]/20 flex items-center justify-center text-[#00F0FF] font-bold text-xs mb-3 font-mono">02</div>
-                    <h4 class="text-white font-semibold text-sm mb-2">Paso 2: Pega en Replit Design</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Inicia un nuevo proyecto HTML/JS en Replit o Replit Agent, pega el prompt completo y presiona Enter. El modelo construirá el canvas 3D e interpretará el scroll.
-                    </p>
-                </div>
-                <div class="bg-[#0D0F12]/80 p-5 rounded-xl border border-[#30363d] hover:border-[#F26207]/50 transition-all">
-                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-xs mb-3 font-mono">03</div>
-                    <h4 class="text-white font-semibold text-sm mb-2">Paso 3: Desbloquea con el Passcode</h4>
-                    <p class="text-xs text-slate-400 leading-relaxed">
-                        Si exploras los sitios de demostración en vivo de la comunidad, introduce la contraseña <code class="text-[#00F0FF] font-mono">scrollingwebsites</code> para saltar la barrera de acceso.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <main id="catalog" class="max-w-7xl mx-auto px-4 sm:px-8 pb-24">
-        
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
-            <div>
-                <h3 class="text-2xl font-extrabold text-white flex items-center gap-2">
-                    Librería de Prompts <span id="promptCountBadge" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-[#F26207]/20 text-[#F26207] border border-[#F26207]/30">8 Prompts</span>
-                </h3>
-                <p class="text-xs text-slate-400 mt-1">Haz clic en personalizar para ajustar variables antes de generar en Replit.</p>
-            </div>
-            
-            <!-- Category Filter Buttons -->
-            <div class="flex flex-wrap gap-2" id="filterButtons">
-                <button onclick="filterCategory('all', this)" class="cat-btn active px-3.5 py-1.5 rounded-lg text-xs font-medium bg-[#F26207] text-white shadow-md transition-all">Todos</button>
-                <button onclick="filterCategory('luxury', this)" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-[#121824] text-slate-300 border border-[#30363d] hover:border-[#F26207] transition-all">Lujo & Moda</button>
-                <button onclick="filterCategory('tech', this)" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-[#121824] text-slate-300 border border-[#30363d] hover:border-[#F26207] transition-all">Tech & Hardware</button>
-                <button onclick="filterCategory('automotive', this)" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-[#121824] text-slate-300 border border-[#30363d] hover:border-[#F26207] transition-all">Automotriz</button>
-            </div>
-        </div>
-
-        <!-- Projects Grid -->
-        <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Dynamic JavaScript Content -->
-        </div>
-    </main>
-
-    <div id="promptModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-        <div class="bg-[#121824] border border-[#30363d] rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="px-6 py-4 border-b border-[#30363d] flex items-center justify-between bg-[#0D1117]">
-                <div class="flex items-center gap-3">
-                    <span id="modalCategoryBadge" class="px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#F26207]/20 text-[#F26207] border border-[#F26207]/30"></span>
-                    <h4 id="modalTitle" class="text-base sm:text-lg font-bold text-white">Editar & Personalizar Prompt</h4>
-                </div>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-[#30363d]/50 transition-all">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-            
-            <div class="p-6 overflow-y-auto space-y-5 bg-[#0D0F12]/60 flex-1">
-                <!-- Customization Form Controls -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#121824] p-4 rounded-xl border border-[#30363d]">
-                    <div>
-                        <label class="block text-[11px] font-mono text-slate-400 mb-1">Nombre de la Marca / Título:</label>
-                        <input type="text" id="customBrand" oninput="updateLivePrompt()" class="w-full bg-[#0D0F12] border border-[#30363d] rounded-lg px-3 py-1.5 text-xs text-white focus:border-[#F26207] focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-mono text-slate-400 mb-1">Total de Frames / Animación:</label>
-                        <select id="customFrames" onchange="updateLivePrompt()" class="w-full bg-[#0D0F12] border border-[#30363d] rounded-lg px-3 py-1.5 text-xs text-white focus:border-[#F26207] focus:outline-none">
-                            <option value="120 frames">120 frames (Ligero)</option>
-                            <option value="240 frames">240 frames (Estándar)</option>
-                            <option value="480 frames">480 frames (Cinemático)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-mono text-slate-400 mb-1">Color Destacado Neón:</label>
-                        <input type="text" id="customColor" oninput="updateLivePrompt()" placeholder="ej: neon green, cyan, gold" class="w-full bg-[#0D0F12] border border-[#30363d] rounded-lg px-3 py-1.5 text-xs text-white focus:border-[#F26207] focus:outline-none">
-                    </div>
-                </div>
-
-                <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-slate-400 font-mono text-xs uppercase tracking-wide">Prompt Resultante (Listo para Replit):</span>
-                        <span class="text-[11px] font-mono text-[#00F0FF]"><i class="fa-solid fa-wand-magic-sparkles"></i> Modificación en tiempo real</span>
-                    </div>
-                    <textarea id="modalPromptText" rows="10" class="w-full p-4 rounded-xl bg-[#0D0F12] border border-[#30363d] text-amber-200/90 font-mono text-xs leading-relaxed focus:outline-none focus:border-[#F26207] transition-all resize-y"></textarea>
-                </div>
-            </div>
-
-            <div class="px-6 py-4 border-t border-[#30363d] flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#121824]">
-                <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-                    <i class="fa-solid fa-lock text-emerald-400"></i> Passcode Replit: <strong class="text-[#00F0FF]">scrollingwebsites</strong>
-                </div>
-                <div class="flex items-center gap-3 w-full sm:w-auto">
-                    <button onclick="resetPromptModal()" class="px-4 py-2 rounded-lg text-xs font-mono text-slate-400 hover:text-white transition-all">
-                        Restablecer Original
-                    </button>
-                    <button id="modalCopyBtn" onclick="copyModalPrompt()" class="bg-[#F26207] hover:bg-[#FF5000] text-white text-xs font-semibold px-5 py-2.5 rounded-lg transition-all flex items-center gap-2 shadow-lg w-full sm:w-auto justify-center">
-                        <i class="fa-solid fa-copy"></i> Copiar Prompt Personalizado
-                    </button>
-                </div>
-            </div>
-        </div>
+    <!-- Info Banner -->
+    <div class="info-banner">
+      <h2>💡 How to Use These Prompts</h2>
+      <p>These prompts serve as a <strong>foundational base</strong> to generate cinema-grade 3D scroll-driven experiences in Replit Agent / Replit Design. You can freely modify the brand names, object types, colors, and frame counts to fit your own project requirements.</p>
+      <p style="margin-top: 0.5rem;">🔒 Live Demo Access Password: <span class="password-badge">scrollingwebsites</span></p>
     </div>
 
-    <footer class="border-t border-[#30363d] bg-[#121824]/60 py-8 px-4 sm:px-8 text-center text-xs text-slate-400">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-[#F26207] animate-pulse"></span>
-                <span>Build with Mau — Replit 3D Vault © 2026</span>
-            </div>
-            <div class="flex items-center gap-6 font-mono text-slate-400">
-                <span>Passcode Global: <strong class="text-[#00F0FF]">scrollingwebsites</strong></span>
-                <span>Comunidad YouTube: <strong class="text-white">Build with Mau</strong></span>
-            </div>
+    <!-- Prompts Grid -->
+    <div class="grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">01. SMASH CLUB</span>
+          </div>
+          <a href="https://unraveling-web-experiences.replit.app/burger-anatomy/" target="_blank" class="card-link">unraveling-web-experiences.replit.app/burger-anatomy/</a>
+          <div class="prompt-box" id="p1">Generate a high-end, scroll-driven interactive website for a late-night burger brand called 'SMASH CLUB'. The design should feature a moody, deep red gradient background with a subtle technical grid overlay. In the center, place a high-resolution double cheeseburger. Use bold, brutalist typography with a massive headline that says 'BUILT LOUD.', highlighting the word 'LOUD.' in vibrant neon green. Include small HUD-like text details such as 'A STUDY IN APPETITE', 'EST. AFTER DARK / OAKLAND, CA', and a 'SCROLL TO BEGIN' trigger at the bottom. Add a text saying 'Scroll through the heat. Every frame is a reason to stay late.' The entire experience must be built around smooth, cinematic scroll animations.</div>
         </div>
+        <button class="btn-copy" onclick="copyPrompt('p1')">Copy Prompt</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">02. Couture Unraveled</span>
+          </div>
+          <a href="https://unraveling-web-experiences.replit.app" target="_blank" class="card-link">unraveling-web-experiences.replit.app</a>
+          <div class="prompt-box" id="p2">Build an ultra-luxury, high-fashion interactive website for 'Couture Unraveled'. The interface should feature a moody, dark studio backdrop with a white satin gown centered on a mannequin. Use elegant, editorial serif typography for the main title 'Couture unraveled.'. Include minimal HUD technical overlay texts: 'ASTER VALE / 04-24' and 'LOOK 17 / MAIN FILM / 001 - 240' in the top left, 'INDEX' in the top right, and 'A study in separation / 240 frames' above the main headline. At the bottom left, add the text 'Scroll through the assembly. Every frame is a decision.', and a minimal 'SCROLL TO BEGIN' trigger on the bottom right. The core interaction must be a smooth 240-frame scroll-driven animation dissecting the dress assembly.</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt('p2')">Copy Prompt</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">03. Movement in Time</span>
+          </div>
+          <a href="https://unraveling-web-experiences.replit.app/movement-in-time/" target="_blank" class="card-link">unraveling-web-experiences.replit.app/movement-in-time/</a>
+          <div class="prompt-box" id="p3">Create a minimalist, premium editorial interactive landing page called 'Movement in Time' for an independent Swiss watchmaking project. The design should feature a central, top-down macro angled shot of a vintage gold watch on a dark, textured background. Include precise metadata text elements with classic serif and clean sans-serif fonts: top left, 'M / 1848'; top center, 'A STUDY IN TIME / THREE FILMS'; top right, 'INDEX ↓'. Next to the large, elegant title 'Movement in time.', add technical labels like 'INDEPENDENT SWISS WATCHMAKING · 120 FRAMES' and 'MAIN FILM / 009 - 120'. At the bottom left, include a body section with the label '01 / THE INHERITANCE', sub-heading 'A quiet object, first.', and the exact body paragraph: 'A watch is not worn. It is inherited. Scroll slowly to look closer. Built to outlast the hand that winds it. A watch is not worn.' Design this as a 120-frame scroll-driven experience where scrolling reveals the intricate mechanics of the watch case in cinematic detail.</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt('p3')">Copy Prompt</button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">04. Silicon Anatomy</span>
+          </div>
+          <a href="https://unraveling-web-experiences.replit.app/silicon-anatomy/" target="_blank" class="card-link">unraveling-web-experiences.replit.app/silicon-anatomy/</a>
+          <div class="prompt-box" id="p4">Build a dark, technical interactive landing page called 'Silicon Anatomy' showcasing a high-end custom desktop PC build. The interface should have a dark slate gray background centered around a sleek PC tower with a glass side panel revealing internal hardware components. Use bold, modern sans-serif typography for the main title 'See the inside.', highlighting the word 'inside.' in vibrant cyan/teal. Add precise HUD technical labels: top left, 'FIELD GUIDE / 003'; top right, 'THREE FILMS / ONE MACHINE'; above the title, 'MAIN ANATOMY / 001 - 240' and 'SCROLL TO SEPARATE / 240 FRAMES'. In the lower left, include section label '01 / ENCLOSURE', subtitle 'The boundary, before the answer.', and paragraph 'A desktop is not a box. It is a stack of decisions, layered into one quiet machine.'. In the bottom right, add a technical scrubbing control box with 'SCRUB POSITION' and a percentage counter. The interaction must be a 240-frame scroll-driven animation dissecting the PC case and components.</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt('p4')">Copy Prompt</button>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">05. THE ARTIFACT</span>
+          </div>
+          <a href="https://luxury-rug-scroll-film.replit.app/" target="_blank" class="card-link">luxury-rug-scroll-film.replit.app/</a>
+          <div class="prompt-box" id="p5">Build an ultra-luxury artisan interactive landing page titled 'THE ARTIFACT' showcasing high-end hand-woven textile craftsmanship. The interface features a cinematic background of an intricate red, blue, and oxblood medallion rug hanging inside a moody, warmly lit weaving workshop with a traditional wooden loom. Place a massive, elegant serif headline 'THE ARTIFACT' in the center, with a tracked sans-serif subtitle below reading 'DECONSTRUCTING THE OXBLOOD MEDALLION'. Include precise technical HUD labels: top left 'FILM A - 001 / 120', top right 'KHOTAN ATELIER' and 'ARCHIVE // 2026', and bottom right 'SCROLL TO DISCOVER' with a cursor indicator icon. Structure the core interaction as a 120-frame scroll-driven film that zooms into the weave, knotwork, and individual threads as the user scrolls.</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt('p5')">Copy Prompt</button>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">06. GRAIN</span>
+          </div>
+          <a href="https://grain-bench-scroll-film.replit.app" target="_blank" class="card-link">grain-bench-scroll-film.replit.app</a>
+          <div class="prompt-box" id="p6">Build an ultra-luxury architectural furniture design landing page titled 'GRAIN'. The interface features a clean, minimalist studio backdrop showcasing a custom handcrafted walnut wood bench with brass legs and a striking fan-like array of wooden slats topped with brass spheres radiating behind it. Use a large, elegant serif font for the main title 'GRAIN'. Above the title, place a small gold subtitle reading 'BENCH NO. 01 — WALNUT & BRASS'. Directly beneath the headline, include the paragraph 'One unbroken shot, from inside the wood to the finished bench. Scroll.', followed by a subtle 'SCROLL TO DISCOVER ↓' CTA. In the bottom right corner, add minimal metadata labels 'ACT I — WITHIN' and '001 - 480'. Design the experience as a 480-frame scroll-driven film taking the user on a single unbroken visual journey from raw timber to the completed piece.</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt('p6')">Copy Prompt</button>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">07. CIRRO</span>
+          </div>
+          <a href="https://cashmere-scroll-film.replit.app/" target="_blank" class="card-link">cashmere-scroll-film.replit.app/</a>
+          <div class="prompt-box" id="p7">Build an ultra-luxury knitwear landing page titled 'CIRRO'. The interface features a warm, moody studio aesthetic with dramatic side lighting hitting a premium white cashmere turtleneck sweater on a mannequin against a rustic dark stone wall background. Use a refined serif font for the centered main headline 'CIRRO', with a subtle spaced sans-serif subtitle underneath reading 'THE ANATOMY THROUGH LIGHT'. On the left edge, include vertical technical HUD labels reading 'ACT I' near the top and '001 - 120' near the bottom. Structure the core interaction as a 120-frame scroll-driven film that seamlessly explores the fabric texture, cashmere weave, and light play as the user scrolls down.</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt('p7')">Copy Prompt</button>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="card">
+        <div>
+          <div class="card-header">
+            <span class="card-title">08. Mercedes-AMG GT</span>
+          </div>
+          <a href="https://amg-gt-scroll-film.replit.app" target="_blank" class="card-link">amg-gt-scroll-film.replit.app</a>
+          <div class="prompt-box" id="p8">Build a high-end automotive interactive landing page titled 'GT' for the Mercedes-AMG GT. The interface features a dark, cinematic studio backdrop with a silver Mercedes-AMG GT sports car emerging from the shadows, illuminated by soft overhead lighting with reflections on a wet glossy floor. Centered over the car, place a small uppercase subtitle 'MERCEDES - AMG' above a massive, serif headline reading 'GT'. Below the headline, include an italicized subtitle 'One unbroken shot — from skin to crankshaft and back', followed by the interactive CTA 'SCROLL TO DRIVE THE CAMERA'. In the bottom left corner, add the HUD text 'THE STAGE', and in the bottom right corner, add the frame counter '001 - 480'. Structure the experience as a 480-frame scroll-driven camera journey around and inside the vehicle.</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt('p8')">Copy Prompt</button>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>© Build with Mau — Created for Replit Design & Web Developers</p>
     </footer>
+  </div>
 
-    <script>
-        const UNIVERSAL_PASSWORD = "scrollingwebsites";
-
-        const projects = [
-            {
-                id: 1,
-                name: "SMASH CLUB",
-                brandOriginal: "SMASH CLUB",
-                category: "luxury",
-                categoryName: "Gastronomía & Lujo Nocturno",
-                url: "unraveling-web-experiences.replit.app/burger-anatomy/",
-                framesOriginal: "240 frames",
-                colorOriginal: "vibrant neon green",
-                prompt: "Generate a high-end, scroll-driven interactive website for a late-night burger brand called 'SMASH CLUB'. The design should feature a moody, deep red gradient background with a subtle technical grid overlay. In the center, place a high-resolution double cheeseburger. Use bold, brutalist typography with a massive headline that says 'BUILT LOUD.', highlighting the word 'LOUD.' in vibrant neon green. Include small HUD-like text details such as 'A STUDY IN APPETITE', 'EST. AFTER DARK / OAKLAND, CA', and a 'SCROLL TO BEGIN' trigger at the bottom. Add a text saying 'Scroll through the heat. Every frame is a reason to stay late.' The entire experience must be built around smooth, cinematic scroll animations.",
-                modifications: "Modifica el color rojo profundo por tonos ámbar oscuro si prefieres otra temática culinaria. Ajusta la velocidad de scrubbing modificando el multiplicador de frames."
-            },
-            {
-                id: 2,
-                name: "Couture Unraveled",
-                brandOriginal: "Couture Unraveled",
-                category: "luxury",
-                categoryName: "Alta Costura & Moda",
-                url: "unraveling-web-experiences.replit.app",
-                framesOriginal: "240 frames",
-                colorOriginal: "white satin",
-                prompt: "Build an ultra-luxury, high-fashion interactive website for 'Couture Unraveled'. The interface should feature a moody, dark studio backdrop with a white satin gown centered on a mannequin. Use elegant, editorial serif typography for the main title 'Couture unraveled.'. Include minimal HUD technical overlay texts: 'ASTER VALE / 04-24' and 'LOOK 17 / MAIN FILM / 001 - 240' in the top left, 'INDEX' in the top right, and 'A study in separation / 240 frames' above the main headline. At the bottom left, add the text 'Scroll through the assembly. Every frame is a decision.', and a minimal 'SCROLL TO BEGIN' trigger on the bottom right. The core interaction must be a smooth 240-frame scroll-driven animation dissecting the dress assembly.",
-                modifications: "Ideal para marcas de moda. Cambia los textos de los marcos de 240 frames a 120 si deseas aligerar la carga de activos multimedia."
-            },
-            {
-                id: 3,
-                name: "Movement in Time",
-                brandOriginal: "Movement in Time",
-                category: "luxury",
-                categoryName: "Relojería Suiza",
-                url: "unraveling-web-experiences.replit.app/movement-in-time/",
-                framesOriginal: "120 frames",
-                colorOriginal: "vintage gold",
-                prompt: "Create a minimalist, premium editorial interactive landing page called 'Movement in Time' for an independent Swiss watchmaking project. The design should feature a central, top-down macro angled shot of a vintage gold watch on a dark, textured background. Include precise metadata text elements with classic serif and clean sans-serif fonts: top left, 'M / 1848'; top center, 'A STUDY IN TIME / THREE FILMS'; top right, 'INDEX ↓'. Next to the large, elegant title 'Movement in time.', add technical labels like 'INDEPENDENT SWISS WATCHMAKING · 120 FRAMES' and 'MAIN FILM / 009 - 120'. At the bottom left, include a body section with the label '01 / THE INHERITANCE', sub-heading 'A quiet object, first.', and the exact body paragraph: 'A watch is not worn. It is inherited. Scroll slowly to look closer. Built to outlast the hand that winds it. A watch is not worn.' Design this as a 120-frame scroll-driven experience where scrolling reveals the intricate mechanics of the watch case in cinematic detail.",
-                modifications: "Personaliza las etiquetas de metadatos para adaptarlas a marcas de relojería, joyería fina u orfebrería de alta gama."
-            },
-            {
-                id: 4,
-                name: "Silicon Anatomy",
-                brandOriginal: "Silicon Anatomy",
-                category: "tech",
-                categoryName: "Hardware & PC Custom",
-                url: "unraveling-web-experiences.replit.app/silicon-anatomy/",
-                framesOriginal: "240 frames",
-                colorOriginal: "vibrant cyan/teal",
-                prompt: "Build a dark, technical interactive landing page called 'Silicon Anatomy' showcasing a high-end custom desktop PC build. The interface should have a dark slate gray background centered around a sleek PC tower with a glass side panel revealing internal hardware components. Use bold, modern sans-serif typography for the main title 'See the inside.', highlighting the word 'inside.' in vibrant cyan/teal. Add precise HUD technical labels: top left, 'FIELD GUIDE / 003'; top right, 'THREE FILMS / ONE MACHINE'; above the title, 'MAIN ANATOMY / 001 - 240' and 'SCROLL TO SEPARATE / 240 FRAMES'. In the lower left, include section label '01 / ENCLOSURE', subtitle 'The boundary, before the answer.', and paragraph 'A desktop is not a box. It is a stack of decisions, layered into one quiet machine.'. In the bottom right, add a technical scrubbing control box with 'SCRUB POSITION' and a percentage counter. The interaction must be a 240-frame scroll-driven animation dissecting the PC case and components.",
-                modifications: "Excelente para mostrar componentes de PC, servidores o hardware futurista. Cambia el acento cyan por verde neón si lo prefieres."
-            },
-            {
-                id: 5,
-                name: "THE ARTIFACT",
-                brandOriginal: "THE ARTIFACT",
-                category: "luxury",
-                categoryName: "Textil Artesanal",
-                url: "luxury-rug-scroll-film.replit.app/",
-                framesOriginal: "120 frames",
-                colorOriginal: "oxblood medallion",
-                prompt: "Build an ultra-luxury artisan interactive landing page titled 'THE ARTIFACT' showcasing high-end hand-woven textile craftsmanship. The interface features a cinematic background of an intricate red, blue, and oxblood medallion rug hanging inside a moody, warmly lit weaving workshop with a traditional wooden loom. Place a massive, elegant serif headline 'THE ARTIFACT' in the center, with a tracked sans-serif subtitle below reading 'DECONSTRUCTING THE OXBLOOD MEDALLION'. Include precise technical HUD labels: top left 'FILM A - 001 / 120', top right 'KHOTAN ATELIER' and 'ARCHIVE // 2026', and bottom right 'SCROLL TO DISCOVER' with a cursor indicator icon. Structure the core interaction as a 120-frame scroll-driven film that zooms into the weave, knotwork, and individual threads as the user scrolls.",
-                modifications: "Modifica los tonos oxblood por azules índigo o tonos tierra para alfombras orientales o tapicería artesanal."
-            },
-            {
-                id: 6,
-                name: "GRAIN",
-                brandOriginal: "GRAIN",
-                category: "luxury",
-                categoryName: "Diseño Arquitectónico",
-                url: "grain-bench-scroll-film.replit.app",
-                framesOriginal: "480 frames",
-                colorOriginal: "walnut wood & brass",
-                prompt: "Build an ultra-luxury architectural furniture design landing page titled 'GRAIN'. The interface features a clean, minimalist studio backdrop showcasing a custom handcrafted walnut wood bench with brass legs and a striking fan-like array of wooden slats topped with brass spheres radiating behind it. Use a large, elegant serif font for the main title 'GRAIN'. Above the title, place a small gold subtitle reading 'BENCH NO. 01 — WALNUT & BRASS'. Directly beneath the headline, include the paragraph 'One unbroken shot, from inside the wood to the finished bench. Scroll.', followed by a subtle 'SCROLL TO DISCOVER ↓' CTA. In the bottom right corner, add minimal metadata labels 'ACT I — WITHIN' and '001 - 480'. Design the experience as a 480-frame scroll-driven film taking the user on a single unbroken visual journey from raw timber to the completed piece.",
-                modifications: "Ideal para estudios de arquitectura y diseño de mobiliario. Sube a 480 frames para transiciones extremadamente suaves."
-            },
-            {
-                id: 7,
-                name: "CIRRO",
-                brandOriginal: "CIRRO",
-                category: "luxury",
-                categoryName: "Knitwear & Cachemira",
-                url: "cashmere-scroll-film.replit.app/",
-                framesOriginal: "120 frames",
-                colorOriginal: "white cashmere",
-                prompt: "Build an ultra-luxury knitwear landing page titled 'CIRRO'. The interface features a warm, moody studio aesthetic with dramatic side lighting hitting a premium white cashmere turtleneck sweater on a mannequin against a rustic dark stone wall background. Use a refined serif font for the centered main headline 'CIRRO', with a subtle spaced sans-serif subtitle underneath reading 'THE ANATOMY THROUGH LIGHT'. On the left edge, include vertical technical HUD labels reading 'ACT I' near the top and '001 - 120' near the bottom. Structure the core interaction as a 120-frame scroll-driven film that seamlessly explores the fabric texture, cashmere weave, and light play as the user scrolls down.",
-                modifications: "Modifica los fondos de piedra rústica a tonos arena o gris claro para colecciones de verano o primavera."
-            },
-            {
-                id: 8,
-                name: "GT (Mercedes-AMG)",
-                brandOriginal: "GT",
-                category: "automotive",
-                categoryName: "Automotriz de Alto Rendimiento",
-                url: "amg-gt-scroll-film.replit.app",
-                framesOriginal: "480 frames",
-                colorOriginal: "silver metallic",
-                prompt: "Build a high-end automotive interactive landing page titled 'GT' for the Mercedes-AMG GT. The interface features a dark, cinematic studio backdrop with a silver Mercedes-AMG GT sports car emerging from the shadows, illuminated by soft overhead lighting with reflections on a wet glossy floor. Centered over the car, place a small uppercase subtitle 'MERCEDES - AMG' above a massive, serif headline reading 'GT'. Below the headline, include an italicized subtitle 'One unbroken shot — from skin to crankshaft and back', followed by the interactive CTA 'SCROLL TO DRIVE THE CAMERA'. In the bottom left corner, add the HUD text 'THE STAGE', and in the bottom right corner, add the frame counter '001 - 480'. Structure the experience as a 480-frame scroll-driven camera journey around and inside the vehicle",
-                modifications: "Perfecto para presentaciones de vehículos deportivos, barcos o productos industriales complejos con 480 fotogramas de recorrido."
-            }
-        ];
-
-        let currentCategory = 'all';
-        let searchQuery = '';
-        let activeProject = null;
-
-        // Render projects array into HTML grid
-        function renderProjects() {
-            const grid = document.getElementById('projectsGrid');
-            grid.innerHTML = '';
-
-            const filtered = projects.filter(p => {
-                const matchesCat = currentCategory === 'all' || p.category === currentCategory;
-                const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                      p.categoryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                      p.prompt.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchesCat && matchesSearch;
-            });
-
-            document.getElementById('promptCountBadge').innerText = `${filtered.length} Prompts`;
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-1 md:col-span-2 text-center py-12 glass-panel rounded-2xl border border-[#30363d]">
-                        <i class="fa-solid fa-compass-drafting text-3xl text-[#F26207] mb-3"></i>
-                        <h4 class="text-white font-bold text-base">No se encontraron prompts</h4>
-                        <p class="text-slate-400 text-xs mt-1">Prueba filtrando por otra categoría o palabra clave.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'glass-panel rounded-2xl p-6 border border-[#30363d] flex flex-col justify-between hover:border-[#F26207]/60 transition-all group relative overflow-hidden';
-                card.innerHTML = `
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between gap-2">
-                            <span class="px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-[#F26207]/15 text-[#F26207] border border-[#F26207]/30">
-                                ${p.categoryName}
-                            </span>
-                            <a href="https://${p.url}" target="_blank" class="text-xs font-mono text-slate-400 hover:text-[#00F0FF] flex items-center gap-1.5 transition-all">
-                                <i class="fa-solid fa-arrow-up-right-from-square text-[#F26207]"></i> Demo Sitio
-                            </a>
-                        </div>
-
-                        <div>
-                            <h4 class="text-xl font-bold text-white group-hover:text-[#F26207] transition-colors">${p.name}</h4>
-                            <div class="text-[11px] font-mono text-slate-400 mt-0.5">URL: <span class="text-slate-300">${p.url}</span></div>
-                        </div>
-
-                        <div class="relative">
-                            <pre class="text-xs text-slate-300 font-mono bg-[#0D0F12] p-3.5 rounded-xl border border-[#30363d] overflow-x-auto max-h-32 leading-relaxed select-all">${p.prompt}</pre>
-                        </div>
-
-                        <div class="bg-[#121824] p-3 rounded-xl border border-[#30363d] flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-shield-halved text-amber-400 text-xs"></i>
-                                <span class="text-xs font-mono text-slate-400">Passcode Demo:</span>
-                                <code class="text-xs font-mono font-bold text-[#00F0FF]">${UNIVERSAL_PASSWORD}</code>
-                            </div>
-                            <button onclick="copyText('${UNIVERSAL_PASSWORD}', 'Passcode copiado')" class="text-slate-400 hover:text-white text-xs px-2 py-1 rounded transition-all" title="Copiar Passcode">
-                                <i class="fa-solid fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="pt-5 mt-5 border-t border-[#30363d] flex items-center gap-2">
-                        <button onclick="copyText(projects.find(x => x.id === ${p.id}).prompt, 'Prompt copiado al portapapeles')" 
-                                class="flex-1 bg-[#F26207] hover:bg-[#FF5000] text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all shadow flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-copy"></i> Copiar Prompt
-                        </button>
-                        <button onclick="openModal(${p.id})" 
-                                class="bg-[#0D0F12] hover:bg-[#21262d] text-slate-200 hover:text-white text-xs font-semibold py-2.5 px-3.5 rounded-xl border border-[#30363d] transition-all flex items-center gap-1.5" title="Personalizar variables">
-                            <i class="fa-solid fa-sliders text-[#00F0FF]"></i> Personalizar
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // Filtering Logic
-        function filterCategory(cat, btn) {
-            currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => {
-                b.classList.remove('bg-[#F26207]', 'text-white', 'shadow-md');
-                b.classList.add('bg-[#121824]', 'text-slate-300', 'border', 'border-[#30363d]');
-            });
-            btn.classList.remove('bg-[#121824]', 'text-slate-300', 'border', 'border-[#30363d]');
-            btn.classList.add('bg-[#F26207]', 'text-white', 'shadow-md');
-            renderProjects();
-        }
-
-        function handleSearch(val) {
-            searchQuery = val;
-            renderProjects();
-        }
-
-        function scrollToCatalog() {
-            const el = document.getElementById('catalog');
-            el.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Modal Management
-        function openModal(id) {
-            activeProject = projects.find(p => p.id === id);
-            if (!activeProject) return;
-
-            document.getElementById('modalTitle').innerText = `Personalizar: ${activeProject.name}`;
-            document.getElementById('modalCategoryBadge').innerText = activeProject.categoryName;
-            
-            document.getElementById('customBrand').value = activeProject.brandOriginal;
-            document.getElementById('customFrames').value = activeProject.framesOriginal;
-            document.getElementById('customColor').value = activeProject.colorOriginal;
-
-            document.getElementById('modalPromptText').value = activeProject.prompt;
-
-            document.getElementById('promptModal').classList.remove('hidden');
-            document.getElementById('promptModal').classList.add('flex');
-        }
-
-        function closeModal() {
-            document.getElementById('promptModal').classList.add('hidden');
-            document.getElementById('promptModal').classList.remove('flex');
-        }
-
-        function updateLivePrompt() {
-            if (!activeProject) return;
-            let text = activeProject.prompt;
-
-            const brandVal = document.getElementById('customBrand').value.trim();
-            const framesVal = document.getElementById('customFrames').value;
-            const colorVal = document.getElementById('customColor').value.trim();
-
-            if (brandVal && activeProject.brandOriginal) {
-                text = text.replaceAll(activeProject.brandOriginal, brandVal);
-            }
-            if (framesVal && activeProject.framesOriginal) {
-                text = text.replaceAll(activeProject.framesOriginal, framesVal);
-            }
-            if (colorVal && activeProject.colorOriginal) {
-                text = text.replaceAll(activeProject.colorOriginal, colorVal);
-            }
-
-            document.getElementById('modalPromptText').value = text;
-        }
-
-        function resetPromptModal() {
-            if (!activeProject) return;
-            document.getElementById('customBrand').value = activeProject.brandOriginal;
-            document.getElementById('customFrames').value = activeProject.framesOriginal;
-            document.getElementById('customColor').value = activeProject.colorOriginal;
-            document.getElementById('modalPromptText').value = activeProject.prompt;
-        }
-
-        function copyModalPrompt() {
-            const text = document.getElementById('modalPromptText').value;
-            copyText(text, 'Prompt personalizado copiado exitosamente');
-            closeModal();
-        }
-
-        // Generic Toast Notification
-        function copyText(str, msg) {
-            const textarea = document.createElement('textarea');
-            textarea.value = str;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                document.execCommand('copy');
-                showToast(msg || 'Texto copiado al portapapeles');
-            } catch (err) {
-                showToast('Error al copiar el texto');
-            } finally {
-                document.body.removeChild(textarea);
-            }
-        }
-
-        function showToast(message) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'pointer-events-auto bg-[#121824] border border-[#F26207] text-white text-xs font-mono px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 transform translate-y-2 opacity-0 transition-all duration-300';
-            toast.innerHTML = `
-                <i class="fa-solid fa-[#F26207] fa-circle-check text-emerald-400 text-sm"></i>
-                <span>${message}</span>
-            `;
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // On window load
-        window.onload = function() {
-            renderProjects();
-        };
-    </script>
+  <script>
+    function copyPrompt(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Prompt copied to clipboard!");
+      });
+    }
+  </script>
 </body>
 </html>
